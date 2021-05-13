@@ -15,10 +15,16 @@ struct ContentView: View {
             VStack {
                 NavigationLink("PostList",
                                destination: PostList(posts: model.allPosts))
+                    .padding()
                 NavigationLink("PostForEach",
                                destination:PostForEach(posts:model.allPosts))
+                    .padding()
                 NavigationLink("PostForEach lazy",
                                destination:PostForEach(posts:model.allPosts, lazy: true))
+                    .padding()
+                NavigationLink("PostForEach Modifier",
+                               destination:PostForEachModifier(posts:model.allPosts))
+                    .padding()
             }
         }
     }
