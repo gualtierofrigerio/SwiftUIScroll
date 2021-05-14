@@ -11,12 +11,10 @@ struct PostList: View {
     var posts:[Post]
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("there are \(posts.count) posts")
-                List(posts) { post in
-                    PostView(post: post)
-                }
+        VStack {
+            Text("there are \(posts.count) posts")
+            List(posts) { post in
+                PostView(post: post)
             }
         }
     }
