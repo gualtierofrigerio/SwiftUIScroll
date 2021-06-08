@@ -8,15 +8,41 @@
 import SwiftUI
 
 struct PostList: View {
-    var posts:[Post]
+    @State var posts:[Post]
     
     var body: some View {
         VStack {
             Text("there are \(posts.count) posts")
-            List(posts) { post in
-                PostView(post: post)
+            if #available(iOS 15.0, *) {
+                List(posts) { post in
+                    PostView(post: post)
+                }
+                .refreshable {
+                    await refreshListAsync()
+                }
+            } else {
+                List(posts) { post in
+                    PostView(post: post)
+                }
             }
         }
+    }
+    
+    @State private var isRefreshing = false
+    
+    @available(iOS 15.0, *)
+    private func refreshListAsync() async {
+        if isRefreshing == false {
+            isRefreshing = true
+            self.posts = await shufflePosts(posts)
+            print(" do nothing ...")
+            isRefreshing = false
+        }
+    }
+    
+    @available(iOS 15.0, *)
+    private func shufflePosts(_ posts: [Post]) async -> [Post] {
+        return posts.shuffled()
     }
 }
 
