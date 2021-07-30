@@ -29,15 +29,13 @@ struct ScrollViewPullRefresh<Content:View>: View {
                     }
             }
             .onPreferenceChange(OffsetPreferenceKey.self) { offset in
-                if offset > threshold {
+                if offset > threshold && isRefreshing == false {
                     if let action = refreshAction {
-                        if isRefreshing == false {
-                            Task {
-                                isRefreshing = true
-                                await action()
-                                withAnimation {
-                                    isRefreshing = false
-                                }
+                        Task {
+                            isRefreshing = true
+                            await action()
+                            withAnimation {
+                                isRefreshing = false
                             }
                         }
                     }
