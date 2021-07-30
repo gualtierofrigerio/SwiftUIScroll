@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    let model:ContentViewModel
+    let model: ContentViewModel
     
     var body: some View {
         NavigationView {
@@ -25,6 +25,11 @@ struct ContentView: View {
                 NavigationLink("PostForEach Modifier",
                                destination:PostForEachModifier(posts:model.allPosts))
                     .padding()
+                if #available(iOS 15.0, *) {
+                    NavigationLink("PostForEach pull",
+                                   destination: PostForEachPull(viewModel: model))
+                        .padding()
+                }
             }
         }
     }
